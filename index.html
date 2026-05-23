@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Muhammad Reesca Dio Bralyanto Putra</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --neon-cyan: #00f5ff;
+  --neon-pink: #ff006e;
+  --neon-purple: #8b00ff;
+  --neon-green: #00ff88;
+  --bg-deep: #020408;
+  --bg-dark: #070d15;
+  --bg-mid: #0d1825;
+  --text-primary: #e8f4f8;
+  --text-muted: #6b8899;
+  --glass: rgba(13,24,37,0.7);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+#cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--neon-cyan); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, background 0.2s;
+  mix-blend-mode: screen;
+}
+#cursor-trail {
+  position: fixed; width: 40px; height: 40px;
+  border: 1px solid rgba(0,245,255,0.3);
+  border-radius: 50%; pointer-events: none;
+  z-index: 9998; transform: translate(-50%,-50%);
+  transition: all 0.15s ease; mix-blend-mode: screen;
+}
+body:hover #cursor { transform: translate(-50%,-50%) scale(1.2); }
+
+/* CANVAS BACKGROUND */
+#bg-canvas {
+  position: fixed; top:0; left:0;
+  width:100%; height:100%; z-index:0;
+  pointer-events: none;
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:1; opacity:0.5;
+}
+
+/* MAIN WRAPPER */
+main { position:relative; z-index:2; }
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  padding: 1.5rem 3rem;
+  display: flex; align-items:center; justify-content:space-between;
+  backdrop-filter: blur(20px);
+  background: rgba(2,4,8,0.5);
+  border-bottom: 1px solid rgba(0,245,255,0.08);
+}
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem; color: var(--neon-cyan);
+  text-decoration: none; letter-spacing: 0.2em;
+}
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem; color: var(--text-muted);
+  text-decoration:none; letter-spacing:0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0;
+  width:0; height:1px; background: var(--neon-cyan);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--neon-cyan); }
+.nav-links a:hover::after { width:100%; }
+.nav-cta {
+  font-family: 'Space Mono', monospace; font-size:0.75rem;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan); background: transparent;
+  text-decoration:none; letter-spacing:0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.nav-cta:hover {
+  background: var(--neon-cyan); color: var(--bg-deep);
+}
+
+/* HERO SECTION */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items:center;
+  padding: 8rem 3rem 4rem;
+  position: relative; overflow:hidden;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items:center;
+  max-width: 1200px; margin:0 auto; width:100%;
+}
+.hero-text { animation: heroIn 1s ease forwards; opacity:0; }
+@keyframes heroIn {
+  from { opacity:0; transform: translateY(30px); }
+  to { opacity:1; transform: translateY(0); }
+}
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem; color: var(--neon-cyan);
+  letter-spacing: 0.3em; text-transform:uppercase;
+  margin-bottom: 1.5rem;
+  display: flex; align-items:center; gap:1rem;
+}
+.hero-eyebrow::before {
+  content:''; display:block; width:40px; height:1px;
+  background: var(--neon-cyan);
+}
+.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800; line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.hero-name .line1 { color: var(--text-primary); }
+.hero-name .line2 {
+  -webkit-text-stroke: 1px var(--neon-cyan);
+  color: transparent;
+}
+.hero-name .line3 {
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem; color: var(--text-muted);
+  margin: 1.5rem 0 2rem; letter-spacing:0.05em;
+}
+.hero-title span { color: var(--neon-green); }
+.hero-desc {
+  font-size: 1rem; color: var(--text-muted);
+  line-height: 1.8; max-width: 460px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+.btn-primary {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem; padding: 0.9rem 2rem;
+  background: var(--neon-cyan); color: var(--bg-deep);
+  border: none; text-decoration:none;
+  letter-spacing:0.1em; text-transform:uppercase;
+  cursor: pointer; transition: all 0.3s;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  box-shadow: 0 0 20px rgba(0,245,255,0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 40px rgba(0,245,255,0.6);
+  transform: translateY(-2px);
+}
+.btn-outline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem; padding: 0.9rem 2rem;
+  background: transparent; color: var(--neon-pink);
+  border: 1px solid var(--neon-pink); text-decoration:none;
+  letter-spacing:0.1em; text-transform:uppercase;
+  cursor:pointer; transition: all 0.3s;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+}
+.btn-outline:hover {
+  background: rgba(255,0,110,0.1);
+  box-shadow: 0 0 30px rgba(255,0,110,0.3);
+}
+
+/* HERO 3D CONTAINER */
+.hero-visual {
+  position:relative;
+  animation: heroVisIn 1.2s 0.3s ease forwards; opacity:0;
+}
+@keyframes heroVisIn {
+  from { opacity:0; transform: scale(0.9) rotateY(10deg); }
+  to { opacity:1; transform: scale(1) rotateY(0); }
+}
+#three-canvas {
+  width:100%; height:520px; border-radius:4px;
+  display:block;
+}
+.visual-overlay {
+  position:absolute; inset:0; pointer-events:none;
+  border: 1px solid rgba(0,245,255,0.15);
+  border-radius:4px;
+}
+.visual-overlay::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg,
+    rgba(0,245,255,0.05) 0%,
+    transparent 50%,
+    rgba(255,0,110,0.05) 100%);
+}
+.scan-line {
+  position:absolute; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  animation: scan 3s linear infinite; opacity:0.4;
+}
+@keyframes scan {
+  from { top: 0%; } to { top: 100%; }
+}
+.corner-tl, .corner-tr, .corner-bl, .corner-br {
+  position:absolute; width:20px; height:20px;
+}
+.corner-tl { top:0; left:0; border-top:2px solid var(--neon-cyan); border-left:2px solid var(--neon-cyan); }
+.corner-tr { top:0; right:0; border-top:2px solid var(--neon-cyan); border-right:2px solid var(--neon-cyan); }
+.corner-bl { bottom:0; left:0; border-bottom:2px solid var(--neon-cyan); border-left:2px solid var(--neon-cyan); }
+.corner-br { bottom:0; right:0; border-bottom:2px solid var(--neon-cyan); border-right:2px solid var(--neon-cyan); }
+
+/* STATS BAR */
+.stats-bar {
+  display: flex; gap:0; border-top: 1px solid rgba(0,245,255,0.1);
+  border-bottom: 1px solid rgba(0,245,255,0.1);
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  position:relative; z-index:2;
+}
+.stat-item {
+  flex:1; padding: 1.5rem 2rem;
+  border-right: 1px solid rgba(0,245,255,0.1);
+  text-align:center;
+}
+.stat-item:last-child { border-right:none; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem; font-weight:800;
+  color: var(--neon-cyan); display:block;
+  line-height:1;
+}
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size:0.65rem; color: var(--text-muted);
+  text-transform:uppercase; letter-spacing:0.2em;
+  margin-top:0.4rem; display:block;
+}
+
+/* SECTION COMMONS */
+section {
+  padding: 6rem 3rem;
+  position:relative; z-index:2;
+  overflow: hidden; /* Added to contain background videos */
+}
+.section-header {
+  text-align:center; margin-bottom:4rem;
+  position: relative; z-index: 3;
+}
+.section-tag {
+  font-family: 'Space Mono', monospace;
+  font-size:0.7rem; color: var(--neon-cyan);
+  letter-spacing:0.3em; text-transform:uppercase;
+  display:flex; align-items:center; justify-content:center; gap:1rem;
+  margin-bottom:1rem;
+}
+.section-tag::before, .section-tag::after {
+  content:''; display:block; width:40px; height:1px;
+  background: rgba(0,245,255,0.4);
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight:800;
+  line-height:1.1;
+}
+.section-title .accent { color: var(--neon-cyan); }
+.section-title .outline {
+  -webkit-text-stroke: 1px var(--neon-pink);
+  color: transparent;
+}
+
+/* ABOUT SECTION */
+#about { background: var(--bg-dark); }
+.about-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:5rem; align-items:center;
+  max-width:1200px; margin:0 auto;
+}
+.about-photo-container {
+  position:relative;
+}
+#photo-canvas {
+  width:100%; height:480px; display:block;
+  border-radius:4px;
+}
+.photo-frame {
+  position:absolute; inset:0;
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius:4px; pointer-events:none;
+}
+.photo-frame::before {
+  content:''; position:absolute; inset:-8px;
+  border: 1px solid rgba(255,0,110,0.15);
+  border-radius:6px;
+}
+.about-content { padding:1rem 0; position: relative; z-index: 3; }
+.about-intro {
+  font-family: 'Syne', sans-serif;
+  font-size:1.5rem; font-weight:700;
+  margin-bottom:1.5rem; line-height:1.3;
+}
+.about-intro em { color:var(--neon-cyan); font-style:normal; }
+.about-text { color:var(--text-muted); line-height:1.9; margin-bottom:2rem; font-size:0.95rem; }
+.skill-chips { display:flex; flex-wrap:wrap; gap:0.6rem; }
+.chip {
+  font-family:'Space Mono', monospace;
+  font-size:0.7rem; padding:0.4rem 1rem;
+  border:1px solid rgba(0,245,255,0.2);
+  color: var(--text-muted);
+  text-transform:uppercase; letter-spacing:0.1em;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition: all 0.3s;
+}
+.chip:hover {
+  border-color: var(--neon-cyan); color:var(--neon-cyan);
+  background: rgba(0,245,255,0.05);
+  box-shadow: 0 0 10px rgba(0,245,255,0.2);
+}
+
+/* SERVICES -> MINAT */
+#services { background: var(--bg-deep); }
+.services-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; max-width:1200px; margin:0 auto;
+  position: relative; z-index: 3;
+}
+.service-card {
+  padding:2.5rem 2rem;
+  border:1px solid rgba(0,245,255,0.1);
+  background: var(--glass);
+  backdrop-filter:blur(20px);
+  position:relative; overflow:hidden;
+  transition: all 0.4s; cursor:default;
+  clip-path: polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+}
+.service-card::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, transparent, rgba(0,245,255,0.03));
+  opacity:0; transition:opacity 0.4s;
+}
+.service-card:hover {
+  border-color: rgba(0,245,255,0.4);
+  box-shadow: 0 0 40px rgba(0,245,255,0.1), inset 0 0 40px rgba(0,245,255,0.02);
+  transform: translateY(-4px);
+}
+.service-card:hover::before { opacity:1; }
+.service-num {
+  font-family:'Space Mono',monospace; font-size:0.65rem;
+  color: var(--neon-cyan); opacity:0.5;
+  letter-spacing:0.2em; margin-bottom:1.5rem;
+  display:block;
+}
+.service-icon {
+  width:48px; height:48px; margin-bottom:1.5rem;
+  color: var(--neon-cyan);
+}
+.service-title {
+  font-family:'Syne',sans-serif; font-size:1.2rem;
+  font-weight:700; margin-bottom:1rem;
+}
+.service-desc { color:var(--text-muted); font-size:0.9rem; line-height:1.8; }
+.card-glow {
+  position:absolute; width:100px; height:100px;
+  background: var(--neon-cyan); filter:blur(50px);
+  opacity:0; top:-20%; right:-10%;
+  transition:opacity 0.4s;
+}
+.service-card:hover .card-glow { opacity:0.1; }
+
+/* WORKS -> PENGALAMAN */
+#works { background: var(--bg-dark); }
+.works-grid {
+  display:grid; grid-template-columns: repeat(12,1fr);
+  gap:1.5rem; max-width:1200px; margin:0 auto;
+  position: relative; z-index: 3;
+}
+.work-item {
+  border:1px solid rgba(0,245,255,0.08);
+  overflow:hidden; position:relative;
+  aspect-ratio:4/3;
+  background: var(--bg-mid);
+  transition: all 0.4s; cursor:pointer;
+}
+.work-item:nth-child(1) { grid-column: span 7; aspect-ratio:16/9; }
+.work-item:nth-child(2) { grid-column: span 5; }
+.work-item:nth-child(3) { grid-column: span 4; }
+.work-item:nth-child(4) { grid-column: span 4; }
+.work-item:nth-child(5) { grid-column: span 4; }
+.work-canvas { width:100%; height:100%; display:block; }
+.work-overlay {
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(2,4,8,0.9), transparent 60%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:1.5rem; opacity:0; transition: opacity 0.4s;
+  pointer-events:none; 
+}
+.work-item:hover .work-overlay { opacity:1; }
+.work-item:hover {
+  border-color: rgba(0,245,255,0.3);
+  box-shadow: 0 0 30px rgba(0,245,255,0.1);
+}
+.work-cat {
+  font-family:'Space Mono',monospace; font-size:0.65rem;
+  color:var(--neon-cyan); letter-spacing:0.2em;
+  text-transform:uppercase; margin-bottom:0.4rem;
+}
+.work-name {
+  font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700;
+}
+.work-arrow {
+  position:absolute; top:1rem; right:1rem;
+  width:36px; height:36px;
+  border:1px solid rgba(0,245,255,0.3);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--neon-cyan); font-size:1rem;
+  opacity:0; transition: opacity 0.3s, transform 0.3s;
+}
+.work-item:hover .work-arrow { opacity:1; transform:rotate(45deg); }
+
+/* EXPERIENCE -> SERTIFIKAT */
+#experience { background: var(--bg-deep); }
+.exp-container { max-width:900px; margin:0 auto; position: relative; z-index: 3; }
+.exp-item {
+  display:grid; grid-template-columns:180px 1fr;
+  gap:3rem; padding:3rem 0;
+  border-bottom:1px solid rgba(0,245,255,0.08);
+  position:relative;
+}
+.exp-item::before {
+  content:''; position:absolute; left:177px; top:0; bottom:0;
+  width:1px; background:linear-gradient(to bottom, transparent, rgba(0,245,255,0.3), transparent);
+}
+.exp-date {
+  font-family:'Space Mono',monospace; font-size:0.75rem;
+  color:var(--text-muted); letter-spacing:0.1em; padding-top:0.4rem;
+  text-align:right;
+}
+.exp-dot {
+  position:absolute; left:173px; top:3.2rem;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--neon-cyan);
+  box-shadow:0 0 12px var(--neon-cyan);
+}
+.exp-role {
+  font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700;
+  margin-bottom:0.4rem;
+}
+.exp-company { color:var(--neon-cyan); font-size:0.85rem; margin-bottom:1rem; }
+.exp-desc { color:var(--text-muted); font-size:0.9rem; line-height:1.8; }
+
+/* CONTACT */
+#contact {
+  background: var(--bg-dark);
+  text-align:center;
+}
+.contact-container { max-width:800px; margin:0 auto; position: relative; z-index: 3; }
+.contact-email {
+  font-family:'Syne',sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight:800;
+  color:var(--neon-cyan); text-decoration:none;
+  display:inline-block; margin:2rem 0;
+  transition:all 0.3s;
+  border-bottom:2px solid transparent;
+}
+.contact-email:hover {
+  border-bottom-color:var(--neon-cyan);
+  text-shadow:0 0 30px rgba(0,245,255,0.5);
+}
+.social-links {
+  display:flex; justify-content:center; gap:1rem; margin-top:2rem;
+}
+.social-link {
+  font-family:'Space Mono',monospace; font-size:0.75rem;
+  padding:0.7rem 1.5rem; border:1px solid rgba(0,245,255,0.2);
+  color:var(--text-muted); text-decoration:none;
+  letter-spacing:0.15em; text-transform:uppercase;
+  transition:all 0.3s;
+  clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.social-link:hover {
+  border-color:var(--neon-cyan); color:var(--neon-cyan);
+  box-shadow:0 0 20px rgba(0,245,255,0.2);
+}
+
+/* FOOTER */
+footer {
+  padding:2rem 3rem; z-index:2; position:relative;
+  border-top:1px solid rgba(0,245,255,0.08);
+  display:flex; justify-content:space-between; align-items:center;
+  background: rgba(2,4,8,0.8);
+}
+footer p { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--text-muted); }
+
+/* SCROLL INDICATOR */
+.scroll-indicator {
+  position:absolute; bottom:2rem; left:50%;
+  transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+}
+.scroll-indicator span {
+  font-family:'Space Mono',monospace; font-size:0.6rem;
+  color:var(--text-muted); letter-spacing:0.2em; text-transform:uppercase;
+}
+.scroll-line {
+  width:1px; height:60px;
+  background:linear-gradient(to bottom, transparent, var(--neon-cyan), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:0.3; transform:scaleY(0.7); }
+  50% { opacity:1; transform:scaleY(1); }
+}
+
+/* NEON TEXT GLOW */
+.neon-glow {
+  text-shadow:0 0 20px rgba(0,245,255,0.5), 0 0 40px rgba(0,245,255,0.3);
+}
+.pink-glow {
+  text-shadow:0 0 20px rgba(255,0,110,0.5), 0 0 40px rgba(255,0,110,0.3);
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity:0; transform:translateY(40px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:0.1s; }
+.reveal-delay-2 { transition-delay:0.2s; }
+.reveal-delay-3 { transition-delay:0.3s; }
+
+/* SCANLINE HERO BG */
+.hero::after {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,245,255,0.01) 2px, rgba(0,245,255,0.01) 4px);
+  pointer-events:none;
+}
+
+/* =====================================================================
+   ADDITIONAL CSS (SESUAI INSTRUKSI PENAMBAHAN MULTAK)
+   ===================================================================== */
+#games, #artikel { background: var(--bg-dark); }
+
+/* Animated Floating Elements untuk setiap section */
+.floating-anim {
+  animation: floatMove 6s ease-in-out infinite;
+}
+@keyframes floatMove {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Video Background Global */
+.section-bg-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.15; /* Efek transparan halus agar konten terbaca */
+  pointer-events: none;
+}
+
+/* Electric Frame for About Photo */
+.electric-frame {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 15px var(--neon-cyan);
+  animation: electric-pulse 0.05s infinite alternate;
+  border: 2px solid var(--neon-cyan);
+  margin-bottom: 1rem;
+}
+.electric-frame img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 0; left: 0;
+  z-index: 2;
+}
+.electric-frame::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: -10px; right: -10px; bottom: -10px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, var(--neon-cyan), transparent 20%, var(--neon-pink) 50%, transparent 70%);
+  animation: spin 1.5s linear infinite;
+  z-index: 1;
+  filter: blur(8px);
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+@keyframes electric-pulse {
+  0% { box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), inset 0 0 10px var(--neon-cyan); border-color: var(--neon-cyan); }
+  100% { box-shadow: 0 0 15px var(--text-primary), 0 0 35px var(--neon-cyan), inset 0 0 25px var(--neon-cyan); border-color: #fff; }
+}
+
+/* Kodingan CSS File Upload asli tetap dipertahankan meski fungsinya diganti direct file */
+.file-upload-label {
+  display: inline-block;
+  font-family: 'Space Mono', monospace; font-size: 0.7rem;
+  color: var(--neon-cyan); cursor: pointer; border: 1px solid var(--neon-cyan);
+  padding: 5px 10px; border-radius: 4px;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+  transition: all 0.3s;
+}
+.file-upload-label:hover { background: var(--neon-cyan); color: #000; }
+input[type="file"] { display: none; }
+
+/* Grid for Articles and Games */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 3;}
+.card-basic { background: var(--glass); border: 1px solid rgba(0,245,255,0.1); padding: 2rem; border-radius: 8px; transition: 0.3s; }
+.card-basic:hover { border-color: var(--neon-cyan); transform: translateY(-5px); box-shadow: 0 0 20px rgba(0,245,255,0.2); }
+
+/* Image Styling untuk preview/direct link */
+.user-img-preview { 
+  width: 100%; height: 100%; object-fit: cover; 
+  position: absolute; inset: 0; z-index: 5; 
+}
+.game-preview-img {
+  width: 100%; height: 160px; object-fit: cover;
+  border-radius: 4px; margin-bottom: 1.5rem;
+  border: 1px solid rgba(0,245,255,0.3);
+}
+
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 3rem auto 0; position: relative; z-index: 3;}
+.cert-item { aspect-ratio: 4/3; border: 1px solid rgba(0,245,255,0.2); position: relative; border-radius: 8px; overflow: hidden; background: var(--bg-mid); }
+
+/* AUDIO BUTTON STYLING */
+.audio-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 9999;
+  background: rgba(2,4,8,0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0,245,255,0.2);
+}
+.audio-btn:hover {
+  background: var(--neon-cyan);
+  color: var(--bg-deep);
+  box-shadow: 0 0 25px rgba(0,245,255,0.6);
+  transform: scale(1.1);
+}
+.audio-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media(max-width:900px) {
+  .hero-grid, .about-grid { grid-template-columns:1fr; }
+  .services-grid { grid-template-columns:1fr; }
+  .works-grid { grid-template-columns:1fr 1fr; }
+  .work-item:nth-child(n) { grid-column:span 1; aspect-ratio:4/3; }
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  section { padding:4rem 1.5rem; }
+  .exp-item { grid-template-columns:1fr; }
+  .exp-item::before { display:none; }
+  .exp-dot { display:none; }
+  footer { flex-direction:column; gap:1rem; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a href="#hero" class="nav-logo">[ REESCA.DEV ]</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Minat</a></li>
+    <li><a href="#works">Pengalaman</a></li>
+    <li><a href="#experience">Sertifikat</a></li>
+    <li><a href="#artikel">Artikel</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<main>
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Data Analyst & InfoSec</p>
+        <h1 class="hero-name">
+          <span class="line1">REESCA</span><br>
+          <span class="line2">DIO</span><br>
+          <span class="line3">PORTFOLIO</span>
+        </h1>
+        <p class="hero-title">Mahasiswa Sistem Informasi &amp; <span>Data Analyst</span></p>
+        <p class="hero-desc">Mendorong inovasi melalui kolaborasi strategis, pemecahan masalah, dan analisis data. Fokus pada Keamanan Informasi dan Data Science.</p>
+        <div class="hero-actions">
+          <a href="#works" class="btn-primary">Lihat Pengalaman</a>
+          <a href="#contact" class="btn-outline">Hubungi Saya</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <canvas id="three-canvas"></canvas>
+        <div class="visual-overlay">
+          <div class="corner-tl"></div>
+          <div class="corner-tr"></div>
+          <div class="corner-bl"></div>
+          <div class="corner-br"></div>
+          <div class="scan-line"></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num neon-glow" id="count1">0</span>
+      <span class="stat-label">Pengalaman Organisasi</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num neon-glow" id="count2">0</span>
+      <span class="stat-label">Sertifikasi</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num neon-glow" id="count3">0</span>
+      <span class="stat-label">Bahasa Asing</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num neon-glow" id="count4">0</span>
+      <span class="stat-label">Penghargaan</span>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-photo-container reveal">
+        <canvas id="photo-canvas"></canvas>
+        <div class="photo-frame"></div>
+        
+        <div class="floating-anim" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:10;">
+          <div class="electric-frame">
+            <img id="about-img-preview" src="fotoprofile" alt="Profile">
+          </div>
+        </div>
+      </div>
+      <div class="about-content reveal reveal-delay-1">
+        <div class="section-tag" style="justify-content:flex-start;">About Me</div>
+        <h2 class="about-intro">
+          Saya <em>Mahasiswa Sistem Informasi</em> di Universitas Pamulang dengan IPK 3.78.
+        </h2>
+        <p class="about-text">
+          Memiliki landasan kuat dan semangat tinggi untuk berkembang di bidang data science, pemodelan kuantitatif, dan networking. Berpengalaman luas dalam mengelola proyek berbasis data serta memimpin operasional acara skala organisasi.
+        </p>
+        <p class="about-text">
+          Terampil dalam kepemimpinan, negosiasi strategis, dan pemecahan masalah dengan komitmen tinggi untuk memandu tim atau komunitas menuju efisiensi yang terukur.
+        </p>
+        <div class="skill-chips">
+          <span class="chip">Python</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Tableau</span>
+          <span class="chip">Scikit-learn</span>
+          <span class="chip">Data Cleaning</span>
+          <span class="chip">Deep Learning</span>
+          <span class="chip">Google Analytics</span>
+          <span class="chip">HTML/CSS</span>
+          <span class="chip">C</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <video class="section-bg-video" autoplay loop muted playsinline>
+      <source src="LINK_VIDEO_BACKGROUND_MINAT_ANDA.mp4" type="video/mp4">
+    </video>
+    
+    <div class="section-header reveal">
+      <div class="section-tag">Minat & Keahlian</div>
+      <h2 class="section-title">Bidang <span class="accent">Fokus</span> <span class="outline">Saya</span></h2>
+    </div>
+    <div class="services-grid floating-anim">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-glow"></div>
+        <span class="service-num">01 //</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="8" width="36" height="28" rx="2"/>
+          <path d="M16 42h16M24 36v6"/>
+          <path d="M14 20l6 6 12-12" stroke-linecap="round"/>
+        </svg>
+        <h3 class="service-title">Data Analytics & Science</h3>
+        <p class="service-desc">Menganalisis dan memodelkan data menggunakan Tableau, Scikit-learn, Python, serta SQL. Berfokus pada pembersihan data dan wawasan kuantitatif yang bernilai.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="card-glow" style="background:var(--neon-pink)"></div>
+        <span class="service-num">02 //</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--neon-pink)">
+          <polyline points="8,16 16,8 32,8 40,16 40,32 32,40 16,40 8,32" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="8"/>
+          <line x1="24" y1="8" x2="24" y2="16"/>
+          <line x1="24" y1="32" x2="24" y2="40"/>
+        </svg>
+        <h3 class="service-title" style="color:var(--neon-pink)">Machine & Deep Learning</h3>
+        <p class="service-desc">Eksplorasi berkesinambungan di ranah Deep Learning dan Machine Learning, menerapkan algoritma untuk prediksi berbasis big data dan AI yang efisien.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="card-glow" style="background:var(--neon-purple)"></div>
+        <span class="service-num" style="color:var(--neon-purple)">03 //</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--neon-purple)">
+          <path d="M24 6l4 8h10l-8 6 3 10-9-6-9 6 3-10-8-6h10z"/>
+          <circle cx="24" cy="38" r="4"/>
+          <path d="M24 34v-8"/>
+        </svg>
+        <h3 class="service-title" style="color:var(--neon-purple)">Project Management</h3>
+        <p class="service-desc">Pengalaman kuat mengelola tim lintas divisi, alokasi anggaran operasional, dan penyusunan lini masa di proyek seperti Anuva Study & SHASTECH 2026.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-glow" style="background:var(--neon-green)"></div>
+        <span class="service-num" style="color:var(--neon-green)">04 //</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--neon-green)">
+          <rect x="8" y="12" width="20" height="28" rx="2"/>
+          <rect x="22" y="8" width="18" height="28" rx="2"/>
+          <path d="M14 20h8M14 26h8M14 32h4"/>
+        </svg>
+        <h3 class="service-title" style="color:var(--neon-green)">Information Security</h3>
+        <p class="service-desc">Pemahaman inti terhadap arsitektur keamanan informasi dan dasar jaringan sistem (Networking). Memastikan perlindungan aset informasi pada tingkat korporat/organisasi.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <span class="service-num" style="color:#ff6b35">05 //</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#ff6b35">
+          <polyline points="8,36 20,20 28,28 40,12" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8" cy="36" r="3"/>
+          <circle cx="20" cy="20" r="3"/>
+          <circle cx="28" cy="28" r="3"/>
+          <circle cx="40" cy="12" r="3"/>
+        </svg>
+        <h3 class="service-title" style="color:#ff6b35">Quantitative Modeling</h3>
+        <p class="service-desc">Menyusun riset dan model kuantitatif yang solid berdasarkan set data terstruktur dan tak terstruktur untuk merumuskan landasan pengambilan keputusan strategis.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <span class="service-num" style="color:#a8e063">06 //</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#a8e063">
+          <path d="M6 24C6 14 14 6 24 6s18 8 18 18-8 18-18 18"/>
+          <path d="M16 24a8 8 0 0116 0"/>
+          <circle cx="24" cy="24" r="3"/>
+          <path d="M6 24h12M30 24h12" stroke-linecap="round"/>
+        </svg>
+        <h3 class="service-title" style="color:#a8e063">Web Technologies</h3>
+        <p class="service-desc">Penguasaan terapan pada pilar teknologi front-end seperti HTML dan CSS untuk mengonstruksi tampilan aplikasi atau sistem berbasis web modern dan interaktif.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="artikel">
+    <div class="section-header reveal">
+      <div class="section-tag">Publikasi</div>
+      <h2 class="section-title"><span class="accent">Artikel</span> & Riset</h2>
+    </div>
+    <div class="grid-2 reveal floating-anim">
+      <div class="card-basic">
+        <span class="work-cat" style="display:block; margin-bottom:1rem;">Astronomy / Kosmik</span>
+        <h3 class="service-title">Komet 31/ATLAS: Kode Rahasia Kosmik di Balik Fenomena Antarbintang Misterius</h3>
+        <p class="service-desc">Analisis mendalam tentang fenomena kosmik komet 31/ATLAS dan informasi apa saja yang dibawa oleh pergerakannya melintasi semesta.</p>
+        <a href="LINK_ARTIKEL_1_ANDA_DISINI" target="_blank" class="nav-cta" style="display:inline-block; margin-top:1.5rem;">Baca Selengkapnya</a>
+      </div>
+      <div class="card-basic">
+        <span class="work-cat" style="display:block; margin-bottom:1rem;">Tech / UI UX</span>
+        <h3 class="service-title">UI/UX Bukan Sekadar Desain: Keterampilan Penting Bagi Mahasiswa SI</h3>
+        <p class="service-desc">Mengulas pentingnya pola pikir rekayasa pengguna (User Experience) sebagai pondasi bagi mahasiswa Sistem Informasi di industri modern.</p>
+        <a href="LINK_ARTIKEL_2_ANDA_DISINI" target="_blank" class="nav-cta" style="display:inline-block; margin-top:1.5rem;">Baca Selengkapnya</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="works">
+    <video class="section-bg-video" autoplay loop muted playsinline>
+      <source src="LINK_VIDEO_BACKGROUND_PENGALAMAN_ANDA.mp4" type="video/mp4">
+    </video>
+
+    <div class="section-header reveal">
+      <div class="section-tag">Pengalaman</div>
+      <h2 class="section-title"><span class="accent">Aktivitas</span> Organisasi</h2>
+    </div>
+    
+    <div class="works-grid floating-anim">
+      <div class="work-item reveal" onclick="">
+        <canvas class="work-canvas" data-project="0"></canvas>
+        <img class="user-img-preview" src="GAMBAR_PENGALAMAN_1.jpg" style="display:block; opacity:0.6;">
+        <div class="work-overlay">
+          <span class="work-cat">Project Manager</span>
+          <p class="work-name">Anuva Study & Titik Terang</p>
+        </div>
+        <div class="work-arrow">↗</div>
+      </div>
+      <div class="work-item reveal reveal-delay-1" onclick="">
+        <canvas class="work-canvas" data-project="1"></canvas>
+        <img class="user-img-preview" src="GAMBAR_PENGALAMAN_2.jpg" style="display:block; opacity:0.6;">
+        <div class="work-overlay">
+          <span class="work-cat">Ketua Pelaksana</span>
+          <p class="work-name">Workshop IMPACT SI (UNPAM)</p>
+        </div>
+        <div class="work-arrow">↗</div>
+      </div>
+      <div class="work-item reveal reveal-delay-1" onclick="">
+        <canvas class="work-canvas" data-project="2"></canvas>
+        <img class="user-img-preview" src="GAMBAR_PENGALAMAN_3.jpg" style="display:block; opacity:0.6;">
+        <div class="work-overlay">
+          <span class="work-cat">Koordinator Acara</span>
+          <p class="work-name">SHASTECH 2026</p>
+        </div>
+        <div class="work-arrow">↗</div>
+      </div>
+      <div class="work-item reveal reveal-delay-2" onclick="">
+        <canvas class="work-canvas" data-project="3"></canvas>
+        <img class="user-img-preview" src="GAMBAR_PENGALAMAN_4.jpg" style="display:block; opacity:0.6;">
+        <div class="work-overlay">
+          <span class="work-cat">Vice Coordinator PR</span>
+          <p class="work-name">Generasi Energi Bersih (GEN-B)</p>
+        </div>
+        <div class="work-arrow">↗</div>
+      </div>
+      <div class="work-item reveal reveal-delay-3" onclick="">
+        <canvas class="work-canvas" data-project="4"></canvas>
+        <img class="user-img-preview" src="GAMBAR_PENGALAMAN_5.jpg" style="display:block; opacity:0.6;">
+        <div class="work-overlay">
+          <span class="work-cat">Awarding / MC</span>
+          <p class="work-name">Dedikasi Project Batch 6</p>
+        </div>
+        <div class="work-arrow">↗</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-header reveal">
+      <div class="section-tag">Lisensi & Penghargaan</div>
+      <h2 class="section-title">Sertifikasi <span class="accent">Profesional</span></h2>
+    </div>
+    
+    <div class="exp-container">
+      <div class="exp-item reveal floating-anim">
+        <div class="exp-date">2025</div>
+        <div class="exp-dot"></div>
+        <div>
+          <h3 class="exp-role">Data Science Math Skills & Quant Modeling</h3>
+          <p class="exp-company">// Coursera (Duke University) & Wharton Online</p>
+          <p class="exp-desc">Menyelesaikan sertifikasi terkemuka global berfokus pada fondasi matematika untuk spesialisasi data science, serta pengenalan mendalam pada model-model pengukuran kuantitatif bisnis dan analisis statistik.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal reveal-delay-1 floating-anim">
+        <div class="exp-date">2025</div>
+        <div class="exp-dot"></div>
+        <div>
+          <h3 class="exp-role">Machine Learning & Computer Vision Apps</h3>
+          <p class="exp-company">// Coursera (Univ of London) & Microsoft Azure</p>
+          <p class="exp-desc">Penerapan komputasi kognitif secara hands-on dan perancangan aplikasi kecerdasan buatan, di samping pembelajaran mesin ekstensif.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal reveal-delay-2 floating-anim">
+        <div class="exp-date">2025</div>
+        <div class="exp-dot"></div>
+        <div>
+          <h3 class="exp-role">Data Analytics, Networking & Complexity Science</h3>
+          <p class="exp-company">// RevoU, Nvidia, Nanyang Technological University</p>
+          <p class="exp-desc">Mendapatkan keahlian fundamental dalam Data Analytics, arsitektur Networking dengan platform industri dari Nvidia, serta sains kerumitan modern.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-grid reveal floating-anim">
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_1.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_2.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_3.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_4.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_5.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_6.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_7.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_8.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_9.jpg" style="display:block;">
+      </div>
+      <div class="cert-item">
+        <img class="user-img-preview" src="GAMBAR_SERTIFIKAT_10.jpg" style="display:block;">
+      </div>
+    </div>
+  </section>
+
+  <section id="games">
+    <video class="section-bg-video" autoplay loop muted playsinline>
+      <source src="" type="video/mp4">
+    </video>
+
+    <div class="section-header reveal">
+      <div class="section-tag">Interactive</div>
+      <h2 class="section-title">Mini <span class="accent">Games</span></h2>
+    </div>
+    
+    <div class="grid-2 reveal floating-anim">
+      <div class="card-basic" style="text-align: center;">
+        <img src="FOTO_PREVIEW_GAME_1.jpg" alt="Game Preview" class="game-preview-img">
+        <h3 class="service-title">Snake Cyber</h3>
+        <p class="service-desc">Game retro snake dengan tampilan antarmuka ala keamanan cyber / hacker terminal.</p>
+        <a href="LINK_GAME_1_ANDA_DISINI" target="_blank" class="btn-primary" style="display:inline-block; margin-top:1.5rem;">Mainkan Sekarang</a>
+      </div>
+      <div class="card-basic" style="text-align: center;">
+        <img src="FOTO_PREVIEW_GAME_2.jpg" alt="Game Preview" class="game-preview-img">
+        <h3 class="service-title">Data Decoder Matrix</h3>
+        <p class="service-desc">Game teka-teki logika cepat di mana Anda menebak urutan bilangan desimal layaknya dekripsi data.</p>
+        <a href="LINK_GAME_2_ANDA_DISINI" target="_blank" class="btn-outline" style="display:inline-block; margin-top:1.5rem;">Mainkan Sekarang</a>
+      </div>
+    </div>
+  </section>
+  <section id="contact">
+    <div class="contact-container reveal floating-anim">
+      <div class="section-tag">Kontak</div>
+      <h2 class="section-title">Mari <span class="accent">Berkolaborasi</span><br>Dalam <span class="outline">Data & Keamanan</span></h2>
+      <p style="color:var(--text-muted);margin:1.5rem 0;font-size:0.95rem;line-height:1.8;">
+        Terbuka untuk peluang menarik sebagai Data Analyst, diskusi strategis keamanan informasi, proyek manajemen kepanitiaan atau peluang karier secara profesional. Mari terhubung.
+      </p>
+      <a href="mailto:dyooptra28@email.com" class="contact-email">dyooptra28@email.com</a>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/muhammad-reesca-dio-bralyanto-putra-7bab54378/" target="_blank" class="social-link">LinkedIn</a>
+        <a href="https://github.com/MReescaDio" target="_blank" class="social-link">GitHub</a>
+        <a href="https://www.instagram.com/rssca.yo" target="_blank" class="social-link">Instagram</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Muhammad Reesca Dio Bralyanto Putra — Tangerang, Indonesia 🇮🇩</p>
+  <p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--text-muted);">[ All rights reserved ]</p>
+</footer>
+
+<audio id="bg-audio" autoplay loop>
+  <source src="LINK_AUDIO_ANDA_DISINI.mp3" type="audio/mpeg">
+</audio>
+<button id="audio-toggle" class="audio-btn">
+  <svg id="audio-icon-playing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+  </svg>
+  <svg id="audio-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <line x1="23" y1="1" x2="1" y2="23"></line>
+    <line x1="15.54" y1="8.46" x2="15.54" y2="15.54"></line>
+  </svg>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+/* ==================== SCRIPT BARU: BACKGROUND AUDIO TOGGLE ==================== */
+const bgAudio = document.getElementById('bg-audio');
+const audioToggle = document.getElementById('audio-toggle');
+const iconPlaying = document.getElementById('audio-icon-playing');
+const iconMuted = document.getElementById('audio-icon-muted');
+
+// Mengatasi pemblokiran autoplay browser: 
+// Audio akan menyala saat pengguna berinteraksi pertama kali dengan halaman jika diblokir
+document.body.addEventListener('click', function() {
+  if (bgAudio.paused && !bgAudio.muted) {
+    bgAudio.play().catch(e => console.log("Autoplay blocked pending user interaction."));
+    iconPlaying.style.display = 'block';
+    iconMuted.style.display = 'none';
+  }
+}, { once: true });
+
+audioToggle.addEventListener('click', (e) => {
+  e.stopPropagation(); 
+  if(bgAudio.paused) {
+    bgAudio.play();
+    iconPlaying.style.display = 'block';
+    iconMuted.style.display = 'none';
+  } else {
+    bgAudio.pause();
+    iconPlaying.style.display = 'none';
+    iconMuted.style.display = 'block';
+  }
+});
+
+/* ==================== SCRIPT LAMA: IMAGE PREVIEW ==================== */
+// (Komentar Script: Bagian ini tetap dipertahankan meski input di HTML telah dihapus, 
+// mengikuti aturan mutlak "jangan mengurangi baris kodingan yang sudah ada")
+function previewImage(event, imgId, isHideLabel = false) {
+  const reader = new FileReader();
+  reader.onload = function() {
+    const imgElement = document.getElementById(imgId);
+    if(imgElement) imgElement.src = reader.result;
+    
+    if(isHideLabel && event.target && event.target.parentElement) {
+      if(imgElement) imgElement.style.display = 'block';
+      const label = event.target.parentElement;
+      label.style.opacity = '0.1'; 
+      label.onmouseenter = () => label.style.opacity = '1';
+      label.onmouseleave = () => label.style.opacity = '0.1';
+    }
+  }
+  if(event.target.files && event.target.files[0]) {
+    reader.readAsDataURL(event.target.files[0]);
+  }
+}
+/* ==================== END SCRIPT LAMA ==================== */
+
+/* ==================== CURSOR ==================== */
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+let mx=0, my=0, tx=0, ty=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx+'px';
+  cursor.style.top = my+'px';
+});
+
+(function animCursor() {
+  tx += (mx - tx) * 0.15;
+  ty += (my - ty) * 0.15;
+  trail.style.left = tx+'px';
+  trail.style.top = ty+'px';
+  requestAnimationFrame(animCursor);
+})();
+
+document.querySelectorAll('a, button, .service-card, .work-item, .chip, .file-upload-label, .audio-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+    cursor.style.background = 'var(--neon-pink)';
+    trail.style.borderColor = 'rgba(255,0,110,0.4)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.background = 'var(--neon-cyan)';
+    trail.style.borderColor = 'rgba(0,245,255,0.3)';
+  });
+});
+
+/* ==================== BG CANVAS: LASER GRID ==================== */
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+function resizeBg() {
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+resizeBg();
+window.addEventListener('resize', resizeBg);
+
+let t = 0;
+const particles = Array.from({length:80}, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  vx: (Math.random()-0.5)*0.5,
+  vy: (Math.random()-0.5)*0.5,
+  r: Math.random()*1.5+0.5,
+  col: Math.random()>0.5?'rgba(0,245,255,':'rgba(255,0,110,'
+}));
+
+function drawBg() {
+  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
+  t += 0.005;
+
+  // Grid
+  const gW = 60, gH = 60;
+  bgCtx.strokeStyle = 'rgba(0,245,255,0.05)';
+  bgCtx.lineWidth = 0.5;
+  const offX = (t*20)%gW, offY = (t*10)%gH;
+  for(let x = -gW+offX; x < bgCanvas.width+gW; x+=gW) {
+    bgCtx.beginPath(); bgCtx.moveTo(x,0); bgCtx.lineTo(x+bgCanvas.height*0.3,bgCanvas.height); bgCtx.stroke();
+  }
+  for(let y = -gH+offY; y < bgCanvas.height+gH; y+=gH) {
+    bgCtx.beginPath(); bgCtx.moveTo(0,y); bgCtx.lineTo(bgCanvas.width,y); bgCtx.stroke();
+  }
+
+  // Laser beams
+  for(let i=0; i<3; i++) {
+    const lx = (Math.sin(t*0.7+i*2.1)+1)/2*bgCanvas.width;
+    const grad = bgCtx.createLinearGradient(lx,0,lx+200,bgCanvas.height);
+    grad.addColorStop(0,'transparent');
+    grad.addColorStop(0.5,i%2===0?'rgba(0,245,255,0.04)':'rgba(255,0,110,0.03)');
+    grad.addColorStop(1,'transparent');
+    bgCtx.fillStyle = grad;
+    bgCtx.fillRect(lx-2,0,4,bgCanvas.height);
+  }
+
+  // Particles
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0||p.x>bgCanvas.width) p.vx*=-1;
+    if(p.y<0||p.y>bgCanvas.height) p.vy*=-1;
+    bgCtx.beginPath();
+    bgCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bgCtx.fillStyle = p.col+'0.6)';
+    bgCtx.fill();
+  });
+
+  // Connections
+  particles.forEach((p,i) => {
+    particles.slice(i+1).forEach(q => {
+      const d = Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<120) {
+        bgCtx.beginPath();
+        bgCtx.moveTo(p.x,p.y); bgCtx.lineTo(q.x,q.y);
+        bgCtx.strokeStyle = `rgba(0,245,255,${0.08*(1-d/120)})`;
+        bgCtx.lineWidth = 0.5;
+        bgCtx.stroke();
+      }
+    });
+  });
+
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+/* ==================== THREE.JS HERO ==================== */
+(function initHero() {
+  const canvas = document.getElementById('three-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.5;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+  camera.position.set(0,0,5);
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Main sphere
+  const geo = new THREE.IcosahedronGeometry(1.5, 4);
+  const mat = new THREE.MeshPhongMaterial({
+    color: 0x001122, emissive: 0x001122,
+    wireframe: false, transparent:true, opacity:0.9
+  });
+  const sphere = new THREE.Mesh(geo, mat);
+  scene.add(sphere);
+
+  // Wireframe overlay
+  const wfMat = new THREE.MeshBasicMaterial({
+    color: 0x00f5ff, wireframe:true, transparent:true, opacity:0.15
+  });
+  const wireframe = new THREE.Mesh(geo.clone(), wfMat);
+  wireframe.scale.setScalar(1.01);
+  scene.add(wireframe);
+
+  // Glowing ring
+  const ringGeo = new THREE.TorusGeometry(2.2, 0.01, 8, 100);
+  const ringMat = new THREE.MeshBasicMaterial({color: 0x00f5ff, transparent:true, opacity:0.4});
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI/3;
+  scene.add(ring);
+
+  const ring2 = new THREE.Mesh(
+    new THREE.TorusGeometry(2.6, 0.005, 8, 100),
+    new THREE.MeshBasicMaterial({color: 0xff006e, transparent:true, opacity:0.3})
+  );
+  ring2.rotation.x = -Math.PI/4;
+  ring2.rotation.z = Math.PI/6;
+  scene.add(ring2);
+
+  // Laser beams (lines)
+  const laserCount = 8;
+  const lasers = [];
+  for(let i=0;i<laserCount;i++) {
+    const angle = (i/laserCount)*Math.PI*2;
+    const points = [
+      new THREE.Vector3(Math.cos(angle)*2.2, Math.sin(angle)*2.2*0.6, 0),
+      new THREE.Vector3(Math.cos(angle+0.5)*3.5, Math.sin(angle+0.5)*2, -1)
+    ];
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+    const lineMat = new THREE.LineBasicMaterial({
+      color: i%2===0 ? 0x00f5ff : 0xff006e,
+      transparent:true, opacity: 0.3+Math.random()*0.3
+    });
+    const line = new THREE.Line(lineGeo, lineMat);
+    scene.add(line);
+    lasers.push({line, angle, speed: 0.3+Math.random()*0.5});
+  }
+
+  // Floating particles
+  const pGeo = new THREE.BufferGeometry();
+  const pPositions = new Float32Array(300*3);
+  const pColors = new Float32Array(300*3);
+  for(let i=0;i<300;i++) {
+    const r = 2+Math.random()*2;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.random()*Math.PI;
+    pPositions[i*3] = r*Math.sin(phi)*Math.cos(theta);
+    pPositions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+    pPositions[i*3+2] = r*Math.cos(phi);
+    const cyan = Math.random()>0.5;
+    pColors[i*3] = cyan?0:1;
+    pColors[i*3+1] = cyan?0.96:0;
+    pColors[i*3+2] = cyan?1:0.43;
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions,3));
+  pGeo.setAttribute('color', new THREE.BufferAttribute(pColors,3));
+  const pMat = new THREE.PointsMaterial({size:0.03, vertexColors:true, transparent:true, opacity:0.8});
+  const pts = new THREE.Points(pGeo, pMat);
+  scene.add(pts);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0x001122, 0.5));
+  const light1 = new THREE.PointLight(0x00f5ff, 3, 10);
+  light1.position.set(3,3,3);
+  scene.add(light1);
+  const light2 = new THREE.PointLight(0xff006e, 2, 10);
+  light2.position.set(-3,-2,2);
+  scene.add(light2);
+
+  // Mouse interaction
+  let mouseX=0, mouseY=0;
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouseX = (e.clientX-r.left)/r.width*2-1;
+    mouseY = -((e.clientY-r.top)/r.height)*2+1;
+  });
+
+  let time=0;
+  function animate() {
+    requestAnimationFrame(animate);
+    time+=0.01;
+
+    sphere.rotation.y = time*0.2;
+    sphere.rotation.x = time*0.1;
+    wireframe.rotation.y = -time*0.15;
+    wireframe.rotation.x = time*0.08;
+
+    ring.rotation.z = time*0.3;
+    ring2.rotation.y = -time*0.2;
+    ring2.rotation.z = time*0.15;
+
+    pts.rotation.y = time*0.05;
+
+    light1.position.x = Math.sin(time)*4;
+    light1.position.z = Math.cos(time)*4;
+    light2.position.x = Math.cos(time*0.7)*4;
+    light2.position.z = Math.sin(time*0.7)*4;
+
+    // Laser animation
+    lasers.forEach(({line, angle, speed}, i) => {
+      const a = angle + time*speed;
+      const pos = line.geometry.attributes.position;
+      pos.setXYZ(0, Math.cos(a)*2.2, Math.sin(a)*1.3, 0);
+      pos.setXYZ(1, Math.cos(a+0.8)*3.5, Math.sin(a+0.8)*2, -1);
+      pos.needsUpdate = true;
+      line.material.opacity = 0.2+Math.abs(Math.sin(time*2+i))*0.4;
+    });
+
+    // Mouse parallax
+    camera.position.x += (mouseX*0.5 - camera.position.x)*0.05;
+    camera.position.y += (mouseY*0.5 - camera.position.y)*0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+/* ==================== THREE.JS PHOTO / ABOUT ==================== */
+(function initPhoto() {
+  const canvas = document.getElementById('photo-canvas');
+  if(!canvas) return;
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50,1,0.1,100);
+  camera.position.z = 4;
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Photo placeholder (animated portrait)
+  const faceGeo = new THREE.SphereGeometry(1, 32, 32);
+  const profileTexture = new THREE.TextureLoader().load('https://ui-avatars.com/api/?name=Reesca+Dio&size=512&background=0d1825&color=00f5ff');
+
+  const faceMat = new THREE.MeshStandardMaterial({
+    color: 0xffffff, roughness:0.3, metalness:0.8, map: profileTexture
+  });
+  const face = new THREE.Mesh(faceGeo, faceMat);
+  scene.add(face);
+
+  // Neon halo
+  const haloGeo = new THREE.TorusGeometry(1.4, 0.02, 8, 80);
+  const haloMat = new THREE.MeshBasicMaterial({color:0x00f5ff, transparent:true, opacity:0.6});
+  const halo = new THREE.Mesh(haloGeo, haloMat);
+  scene.add(halo);
+
+  const halo2 = new THREE.Mesh(
+    new THREE.TorusGeometry(1.7, 0.01, 8, 80),
+    new THREE.MeshBasicMaterial({color:0xff006e, transparent:true, opacity:0.4})
+  );
+  halo2.rotation.x = Math.PI/2;
+  scene.add(halo2);
+
+  // Floating data points
+  const dpGroup = new THREE.Group();
+  for(let i=0;i<20;i++) {
+    const dp = new THREE.Mesh(
+      new THREE.BoxGeometry(0.05,0.05,0.05),
+      new THREE.MeshBasicMaterial({color: Math.random()>0.5?0x00f5ff:0xff006e})
+    );
+    const ang = Math.random()*Math.PI*2;
+    const rad = 1.8+Math.random()*0.8;
+    dp.position.set(Math.cos(ang)*rad, (Math.random()-0.5)*2, Math.sin(ang)*rad);
+    dp.userData.ang = ang; dp.userData.rad = rad; dp.userData.speed = 0.3+Math.random()*0.5;
+    dpGroup.add(dp);
+  }
+  scene.add(dpGroup);
+
+  // Portrait silhouette using planes
+  const bodyGeo = new THREE.CylinderGeometry(0.5, 0.7, 1.5, 20);
+  const bodyMat = new THREE.MeshStandardMaterial({color:0x0d1825, roughness:0.2, metalness:0.9});
+  const body = new THREE.Mesh(bodyGeo, bodyMat);
+  body.position.y = -1.5;
+  scene.add(body);
+
+  // Scan lines on portrait
+  for(let i=0;i<6;i++) {
+    const slGeo = new THREE.PlaneGeometry(3, 0.005);
+    const slMat = new THREE.MeshBasicMaterial({color:0x00f5ff, transparent:true, opacity:0.1+i*0.03});
+    const sl = new THREE.Mesh(slGeo, slMat);
+    sl.position.y = -1+i*0.3;
+    sl.position.z = 1.1;
+    scene.add(sl);
+  }
+
+  const aLight = new THREE.AmbientLight(0x112244, 1);
+  scene.add(aLight);
+  const pLight1 = new THREE.PointLight(0x00f5ff, 5, 8);
+  pLight1.position.set(2,2,3);
+  scene.add(pLight1);
+  const pLight2 = new THREE.PointLight(0xff006e, 3, 8);
+  pLight2.position.set(-2,-1,2);
+  scene.add(pLight2);
+
+  let mx=0, my=0;
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mx = (e.clientX-r.left)/r.width*2-1;
+    my = -((e.clientY-r.top)/r.height)*2+1;
+  });
+
+  let t=0;
+  function animate() {
+    requestAnimationFrame(animate); t+=0.015;
+    face.rotation.y = Math.sin(t*0.5)*0.3 + mx*0.3;
+    face.rotation.x = Math.sin(t*0.3)*0.15 + my*0.2;
+    halo.rotation.z = t*0.4;
+    halo2.rotation.y = t*0.3;
+    halo2.rotation.z = t*0.2;
+
+    dpGroup.children.forEach(dp => {
+      dp.userData.ang += dp.userData.speed * 0.01;
+      dp.position.x = Math.cos(dp.userData.ang)*dp.userData.rad;
+      dp.position.z = Math.sin(dp.userData.ang)*dp.userData.rad;
+      dp.rotation.x += 0.02; dp.rotation.y += 0.03;
+    });
+
+    pLight1.position.x = Math.sin(t)*3;
+    pLight1.position.z = Math.cos(t)*3;
+    camera.position.x += (mx*0.3-camera.position.x)*0.05;
+    camera.position.y += (my*0.3-camera.position.y)*0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+/* ==================== WORK CANVASES ==================== */
+const workPalettes = [
+  ['#00f5ff','#0d1825','#001122'],
+  ['#ff006e','#1a000f','#0d0008'],
+  ['#8b00ff','#0f0020','#06000d'],
+  ['#00ff88','#001a0f','#000d08'],
+  ['#ff6b35','#1a0d00','#0d0700']
+];
+const workTitles = ['Anuva Study','IMPACT SI','SHASTECH','GEN-B','Dedikasi Project'];
+
+document.querySelectorAll('.work-canvas').forEach((c, idx) => {
+  const renderer = new THREE.WebGLRenderer({canvas:c, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60,1,0.1,50);
+  camera.position.z = 4;
+
+  function resizeWork() {
+    const w = c.clientWidth||300, h = c.clientHeight||200;
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  resizeWork();
+  window.addEventListener('resize', resizeWork);
+
+  const pal = workPalettes[idx];
+  const col = new THREE.Color(pal[0]);
+
+  // Background plane
+  const bgGeo = new THREE.PlaneGeometry(20,20);
+  const bgMat = new THREE.MeshBasicMaterial({color: new THREE.Color(pal[1])});
+  const bgPlane = new THREE.Mesh(bgGeo, bgMat);
+  bgPlane.position.z = -3;
+  scene.add(bgPlane);
+
+  // Geometric shapes
+  const shapes = [];
+  const geoms = [
+    new THREE.IcosahedronGeometry(0.6,1),
+    new THREE.OctahedronGeometry(0.7),
+    new THREE.TetrahedronGeometry(0.8),
+    new THREE.TorusGeometry(0.5,0.2,8,20),
+    new THREE.BoxGeometry(0.8,0.8,0.8)
+  ];
+  const g = geoms[idx];
+  const m = new THREE.MeshPhongMaterial({color:new THREE.Color(pal[0]), wireframe:false, transparent:true, opacity:0.8, emissive:new THREE.Color(pal[0]), emissiveIntensity:0.3});
+  const mesh = new THREE.Mesh(g, m);
+  scene.add(mesh);
+
+  // Grid lines
+  for(let i=0;i<5;i++) {
+    const gl = new THREE.Mesh(new THREE.PlaneGeometry(0.01,6), new THREE.MeshBasicMaterial({color:col, transparent:true, opacity:0.15}));
+    gl.position.set(-2+i, 0, -1); scene.add(gl);
+  }
+
+  const pl = new THREE.PointLight(col, 4, 8);
+  pl.position.set(2,2,2); scene.add(pl);
+  scene.add(new THREE.AmbientLight(0x111122, 0.5));
+
+  let hovered = false;
+  c.parentElement.addEventListener('mouseenter', ()=>hovered=true);
+  c.parentElement.addEventListener('mouseleave', ()=>hovered=false);
+
+  let t=0;
+  (function anim() {
+    requestAnimationFrame(anim); t+=0.01+(hovered?0.02:0);
+    mesh.rotation.x = t*0.5; mesh.rotation.y = t*0.7;
+    if(hovered) mesh.scale.setScalar(1+Math.sin(t*3)*0.05);
+    renderer.render(scene, camera);
+  })();
+});
+
+/* ==================== COUNTER ANIMATION ==================== */
+function animateCount(el, target, suffix='') {
+  let start=0, dur=2000, begin=null;
+  function step(ts) {
+    if(!begin) begin=ts;
+    const prog = Math.min((ts-begin)/dur, 1);
+    const ease = 1-Math.pow(1-prog, 3);
+    el.textContent = Math.round(ease*target)+(suffix||'+');
+    if(prog<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      animateCount(document.getElementById('count1'), 7);
+      animateCount(document.getElementById('count2'), 10);
+      animateCount(document.getElementById('count3'), 2);
+      animateCount(document.getElementById('count4'), 5);
+      statsObs.disconnect();
+    }
+  });
+}, {threshold:0.5});
+const statsBar = document.querySelector('.stats-bar');
+if(statsBar) statsObs.observe(statsBar);
+
+/* ==================== SCROLL REVEAL ==================== */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, {threshold:0.1, rootMargin:'0px 0px -50px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ==================== NAV ACTIVE ==================== */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  sections.forEach(s => {
+    const top = s.offsetTop - 100, bottom = top + s.offsetHeight;
+    if(scrollY >= top && scrollY < bottom) {
+      navLinks.forEach(a => a.style.color='');
+      const active = document.querySelector(`.nav-links a[href="#${s.id}"]`);
+      if(active) active.style.color = 'var(--neon-cyan)';
+    }
+  });
+});
+</script>
+</body>
+</html>
